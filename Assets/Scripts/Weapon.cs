@@ -1,18 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected int _maxCapacityMagazine = 12;
+    [SerializeField] protected int _currentCapacity = 0;
+    [SerializeField] protected float _shootDelay = 0.1f;
+    [SerializeField] protected bool _shootMode;
+    [SerializeField] protected bool _isMagazineEmpty = false;
+    [SerializeField] protected AudioClip _shootClip;
+    [SerializeField] protected ParticleSystem _shootPrefab;
+    [SerializeField] protected ParticleSystem _smokePrefab;
+    [SerializeField] protected Projectile _projectile;
+    [SerializeField] protected Ammo _ammo;
+
+    public int GetCapacity()
     {
-        
+        return _currentCapacity;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReloadAmmo()
     {
-        
+
+    }
+
+    protected virtual void Shoot()
+    {
+
+    }
+
+    protected virtual void PlaySound()
+    {
+
+    }
+
+    protected virtual void PlayParticle()
+    {
+
+    }
+
+    protected virtual void ReduceAmmo()
+    {
+
     }
 }

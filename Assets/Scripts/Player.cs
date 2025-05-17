@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float _jumpForce = 5f;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private PauseMenu _pause;
 
-    // Update is called once per frame
-    void Update()
+    private void Jump()
     {
-        
+        _rb.AddForce(Vector3.up * _jumpForce);
     }
 }

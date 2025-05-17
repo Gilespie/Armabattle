@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Battleground : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Rigidbody[] _parts;
+    [SerializeField] private MeshRenderer _mesh;
+    [SerializeField] private Material _material;
+    [SerializeField] private Timer _timer;
+    [SerializeField] private int _loopCount = 3;
+
+    public void OnActivateRandomKinematic()
     {
-        
+        for (int i = 0; i < _loopCount; i++)
+        {
+
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HideMesh()
     {
-        
+        _mesh.enabled = false;
+    }
+
+    public void HideParts()
+    {
+        for (int i = 0; i < _parts.Length; i++)
+        {
+            _parts[i].gameObject.SetActive(false);
+        }
+    }
+
+    public void ActiveParts()
+    {
+        for (int i = 0; i < _parts.Length; i++)
+        {
+            _parts[i].gameObject.SetActive(true);
+        }
     }
 }

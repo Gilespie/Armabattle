@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Ammo : MonoBehaviour
+public abstract class Ammo : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected int _ammoCount = 1;
+
+    public int GetAmmo()
     {
-        
+        return _ammoCount;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void IncrementAmmo(int value)
     {
-        
+        _ammoCount += value;
+    }
+
+    public void DicrementAmmo()
+    {
+        _ammoCount--;
     }
 }

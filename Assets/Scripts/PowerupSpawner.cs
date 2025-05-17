@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerupSpawner : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Powerups[] _powerups;
+    [SerializeField] private float _zLimitPos = 10f;
+    [SerializeField] private float _xLimitPos = 10f;
+    private int _randomIndex = 0;
 
-    // Update is called once per frame
-    void Update()
+    public void SpawbPowerup()
     {
-        
+        _randomIndex = Random.Range(0, _powerups.Length);
+
+        Instantiate(_powerups[_randomIndex].gameObject); 
     }
 }

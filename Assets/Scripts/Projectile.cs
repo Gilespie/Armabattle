@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float _lifeTime = 5f;
+    [SerializeField] private float _damage = 15f;
+    [SerializeField] private float _speed = 30f;
+
+    private void Start()
     {
+        Destroy(gameObject, _lifeTime);
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DelayToDestroy()
     {
-        
+        Destroy(gameObject, _lifeTime);
     }
 }

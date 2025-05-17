@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private TextMeshProUGUI _healthText;
+    [SerializeField] private TextMeshProUGUI _ammoText;
+    [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private Image _weaponImage;
+    [SerializeField] private Player _player;
+    [SerializeField] private Timer _timer;
+    [SerializeField] private Weapon _weapon;
+    [SerializeField] private Ammo _ammo;
 
-    // Update is called once per frame
-    void Update()
+    public void ShowUI()
     {
-        
+
     }
 }

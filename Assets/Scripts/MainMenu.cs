@@ -1,17 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private string _sceneName = "";
+    [SerializeField] private GameObject _creditsPanel;
+    [SerializeField] private GameObject _mainPanel;
+    [SerializeField] private AudioClip _musicClip;
+    private AudioSource _audiosource;
+
+    private void Awake()
+    {
+        _audiosource = GetComponent<AudioSource>();
+        _audiosource.clip = _musicClip;
+        _audiosource.Play();
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
+
+    public void OpenPanel()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HidePanel()
     {
         
     }

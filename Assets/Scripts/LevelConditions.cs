@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class LevelConditions : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Timer _timer;
+    [SerializeField] private Player _player;
+    [SerializeField] private GameObject _winPanel;
+    [SerializeField] private GameObject _loosePanel;
+
+    public void Win()
     {
-        
+        _winPanel.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Loose()
     {
-        
+        _loosePanel.SetActive(true);
     }
+
+    /*public void HideAll()
+    {
+        _winPanel.SetActive(false);
+        _loosePanel.SetActive(false);
+    }*/
 }

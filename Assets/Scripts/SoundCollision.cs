@@ -1,17 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private AudioClip[] _clips;
+    [SerializeField] private float _volumeMultiplier = 0.2f;
+    private int _randomIndex = 0;
+    private AudioSource _audiosource;
 
-    // Update is called once per frame
-    void Update()
+    private void Initialize()
     {
         
     }

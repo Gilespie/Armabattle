@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity : Destructable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] protected float _speed = 5f;
+    [SerializeField] protected float _currentSpeed = 0;
+    [SerializeField] protected float _damage = 5f;
+
+    protected virtual void MoveEntity()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected virtual void Shoot()
     {
-        
+
     }
 }

@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public event Action OnEvent;
+    [SerializeField] private float _roundDuration = 60f;
+    [SerializeField] private float _secondsToEvent = 15f;
+    [SerializeField] private Battleground _battleground;
+    private float _currentTime = 0f;
+
+    public void StartTimer()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetTime()
     {
-        
+        return _currentTime;
+    }
+
+    public void ActiveEvent()
+    {
+
     }
 }
