@@ -11,7 +11,7 @@ public abstract class Powerups : MonoBehaviour
     [SerializeField] protected TypeOfPowerup _typeOfPowerup;
     [SerializeField] protected float _value = 5f;
 
-    private void OnCollisionEnter(Collision collision)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
         
     }

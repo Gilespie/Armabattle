@@ -9,7 +9,7 @@ public abstract class Destructable : MonoBehaviour
     protected bool _isAlive = true;
     protected float _currentHealth = 0;
     protected Collider _collider;
-    protected Rigidbody _rb;
+    protected Rigidbody _rigidbody;
 
     protected virtual void Start()
     {
@@ -18,12 +18,12 @@ public abstract class Destructable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        
+        _currentHealth -= damage;
     }
 
     public void RestoreHealth(float health)
     {
-
+        _currentHealth += health;
     }
 
     public int GetID()
