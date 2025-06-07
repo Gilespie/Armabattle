@@ -11,6 +11,12 @@ public abstract class Destructable : MonoBehaviour
     protected Collider _collider;
     protected Rigidbody _rigidbody;
 
+    protected virtual void Awake()
+    {
+        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     protected virtual void Start()
     {
         _currentHealth = _maxHealth;
@@ -18,12 +24,27 @@ public abstract class Destructable : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if(damage <= 0) return;
+
         _currentHealth -= damage;
+
+        if(_currentHealth <= 0)
+        {
+            _currentHealth = 0f;
+            DestroyEntity();
+        }
     }
 
     public void RestoreHealth(float health)
     {
+        if (health <= 0) return;
+
         _currentHealth += health;
+
+        if(_currentHealth >= _maxHealth)
+        {
+            _currentHealth = _maxHealth;
+        }
     }
 
     public int GetID()
@@ -39,6 +60,7 @@ public abstract class Destructable : MonoBehaviour
     public void DestroyEntity()
     {
         _isAlive = false;
+        Debug.Log("Dead!");
         OnDead?.Invoke(_isAlive);
     }
 }
