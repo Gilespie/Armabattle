@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class AmmoPowerup : Powerups
 {
-    protected override void OnCollisionEnter(Collision collision)
+    [SerializeField] private AmmoType _ammoType;
+
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.TryGetComponent(out Ammo ammo) != false)
+        if (other.TryGetComponent(out AmmoStorage ammostorage))
         {
-            ammo.IncrementAmmo((int)_value);
+            if (ammostorage != null)
+            {
+                ammostorage.IncrementAmmo(_ammoType, (int)_value);
+                Destroy(gameObject);
+            }
         }
     }
 }

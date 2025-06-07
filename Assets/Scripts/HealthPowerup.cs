@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class HealthPowerup : Powerups
 {
-    protected override void OnCollisionEnter(Collision collision)
+    protected override void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.TryGetComponent(out Player player) != false)
+        if (other.TryGetComponent(out Player player) != false)
         {
             player.RestoreHealth(_value);
+            Destroy(gameObject);
         }
     }
 }

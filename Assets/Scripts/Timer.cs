@@ -3,53 +3,65 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public event Action OnEvent;
+    public static event Action OnFallParts;
+    public static event Action OnSpawnPowerups;
+    public static event Action OnFinishRound;
+
     [SerializeField] private float _roundDuration = 60f;
     [SerializeField] private float _secondsToEvent = 15f;
+    [SerializeField] private float _secondsToSpawn = 15f;
     [SerializeField] private Battleground _battleground;
-    private float _currentTime = 0f;
+
+    private float _currentRoundTime = 0f;
+    private float _currentSpawnTime = 0f;
+    private float _currentEventTime = 0f;
 
     public float CurrentTime
     {
-        get { return _currentTime; }
-        private set { _currentTime = value; }
+        get { return _currentRoundTime; }
+        private set { _currentRoundTime = value; }
     }
-    private float _eventTime = 0f;
+    
 
     private void Awake()
     {
-        _currentTime = _roundDuration;  
-        _eventTime = _secondsToEvent;
+        _currentRoundTime = _roundDuration;  
+        _currentEventTime = _secondsToEvent;
+        _currentSpawnTime = _secondsToSpawn;
     }
 
     private void Update()
     {
-        _currentTime -= Time.deltaTime;
-        _eventTime -= Time.deltaTime;
+        _currentRoundTime -= Time.deltaTime;
+        _currentEventTime -= Time.deltaTime;
+        _currentSpawnTime -= Time.deltaTime;
 
-        if (_currentTime <= 0f)
+        if (_currentRoundTime <= 0f)
         {
-            RestartTimer();
+            _currentRoundTime = 0f;
+            OnFinishRound?.Invoke();
         }
-        else if (_eventTime <= 0f)
+        
+        if (_currentEventTime <= 0f)
         {
-            RestartEventTime();
-            OnEvent?.Invoke();
+            RestartTimer(ref _currentEventTime, _secondsToEvent);
+            OnFallParts?.Invoke();
+        }
+
+        if (_currentSpawnTime <= 0f)
+        {
+            RestartTimer(ref _currentSpawnTime, _secondsToSpawn);
+            OnSpawnPowerups?.Invoke();
         }
     }
 
-    public void RestartTimer()
+    public void RestartTimer(ref float currentTime, float setTime)
     {
-        _currentTime = _roundDuration;
-    }
-
-    private void RestartEventTime()
-    {
-        _eventTime = _secondsToEvent;
+        currentTime = setTime;
     }
 
     public float GetTime()
     {
-        return _currentTime;
+        return _currentRoundTime;
     }
 }

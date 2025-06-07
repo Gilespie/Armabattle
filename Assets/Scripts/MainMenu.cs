@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngineInternal;
 
 public class MainMenu : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class MainMenu : MonoBehaviour
         _audiosource = GetComponent<AudioSource>();
         _audiosource.clip = _musicClip;
         _audiosource.Play();
+
+        HideCreditsPanel();
     }
 
     public void ExitGame()
@@ -26,13 +29,13 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(name);
     }
 
-    public void OpenPanel()
+    public void OpenCreditsPanel()
     {
-        
+        _creditsPanel.SetActive(true);
     }
 
-    public void HidePanel()
+    public void HideCreditsPanel()
     {
-        
+        _creditsPanel.SetActive(false);
     }
 }

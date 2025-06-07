@@ -1,18 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollower : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private float _lerpRate = 3f;
+    [SerializeField] private Vector3 _offset;
+    [SerializeField] private Transform _player;
+    [SerializeField] private float _mouseSensitivity = 100f;
+    [SerializeField] private Transform _playerBody;
+    private float _xRotation = 0f;
+
     void Start()
     {
-        
+        transform.position = _player.position + _offset;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        Vector3 targetPos = _player.position + _offset;
         
+        transform.position = Vector3.Lerp(transform.position, targetPos, _lerpRate * Time.fixedDeltaTime);
+        transform.LookAt(_player);
     }
 }

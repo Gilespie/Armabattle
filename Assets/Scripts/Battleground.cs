@@ -1,22 +1,33 @@
+using System.Collections;
 using UnityEngine;
 
 public class Battleground : MonoBehaviour
 {
     [SerializeField] private Rigidbody[] _parts;
     [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private Timer _timer;
-    [SerializeField] private int _loopCount = 3;
+    [SerializeField] private Color _idleColor;
+    [SerializeField] private Color _fallColor;
+    [SerializeField] private int _loopCount = 8;
+    [SerializeField] private float _moveTime = 2f;
+    [SerializeField] private float _fallDelayTime = 0.8f;
+    [SerializeField] private float _returnDelayTime = 2f;
     private Collider _collider;
     private int _randomIndex = 0;
+    private Vector3[] _defaultPositions;
+    private Rigidbody[] _selectedParts;
+    private bool _isMoving = false;
+    
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();    
+        _collider = GetComponent<Collider>();
+        _selectedParts = new Rigidbody[_loopCount];
+        _defaultPositions = new Vector3[_selectedParts.Length];
     }
 
     private void OnEnable()
     {
-        _timer.OnEvent += OnActivateRandomKinematic;
+        Timer.OnFallParts += OnActivateRandomKinematic;
     }
 
     private void Start()
@@ -26,7 +37,7 @@ public class Battleground : MonoBehaviour
 
     private void OnDisable()
     {
-        _timer.OnEvent += OnActivateRandomKinematic;
+        Timer.OnFallParts -= OnActivateRandomKinematic;
     }
 
     public void OnActivateRandomKinematic()
@@ -34,12 +45,7 @@ public class Battleground : MonoBehaviour
         HideMesh();
         ActiveParts();
 
-        for (int i = 0; i < _loopCount; i++)
-        {
-            _randomIndex = Random.Range(0, _parts.Length);
-
-            _parts[_randomIndex].isKinematic = false;
-        }
+        StartCoroutine(FallRoutine());
     }
 
     public void HideMesh()
@@ -62,5 +68,89 @@ public class Battleground : MonoBehaviour
         {
             _parts[i].gameObject.SetActive(true);
         }
+    }
+
+    private void SaveDefaultPositions()
+    {
+        for(int i = 0; i < _defaultPositions.Length; i++)
+        {
+            _defaultPositions[i] = _selectedParts[i].transform.position;
+        }
+    }
+
+    private IEnumerator LoadPositions()
+    {
+        for (int i = 0; i < _defaultPositions.Length; i++)
+        {
+            float elapsedTime = 0f;
+
+            while (elapsedTime < _moveTime)
+            {
+                float t = elapsedTime / _moveTime;
+
+                elapsedTime += Time.deltaTime;
+                
+                _selectedParts[i].transform.position = Vector3.Lerp(_selectedParts[i].transform.position, _defaultPositions[i], t);
+
+                yield return null;
+            }
+
+            _selectedParts[i].transform.position = _defaultPositions[i];
+        }
+
+        yield return null;
+    }
+
+    private void SelectPart()
+    {
+        for (int i = 0; i < _loopCount; i++)
+        {
+            _randomIndex = UnityEngine.Random.Range(0, _parts.Length);
+            _selectedParts[i] = _parts[_randomIndex];
+        }
+    }
+
+    private void ChangeColor(Color color)
+    {
+        for(int i = 0; i < _selectedParts.Length;i++)
+        {
+            MeshRenderer mat = _selectedParts[i].gameObject.GetComponent<MeshRenderer>();
+            mat.material.color = color;
+        }
+    }
+
+    private void DeactivateKinematic()
+    {
+        for (int i = 0; i < _selectedParts.Length; i++)
+        {
+            _selectedParts[i].isKinematic = false;
+        }
+    }
+
+    private void ActivateeKinematic()
+    {
+        for (int i = 0; i < _selectedParts.Length; i++)
+        {
+            _selectedParts[i].isKinematic = true;
+        }
+    }
+
+    private IEnumerator FallRoutine()
+    {
+        SelectPart();
+        SaveDefaultPositions();
+        ChangeColor(_fallColor);
+
+        yield return new WaitForSeconds(_fallDelayTime);
+
+        DeactivateKinematic();
+
+        yield return new WaitForSeconds(_returnDelayTime);
+        
+        ActivateeKinematic();
+        ChangeColor(_idleColor);
+        StartCoroutine(LoadPositions());
+        
+        yield return null;
     }
 }
