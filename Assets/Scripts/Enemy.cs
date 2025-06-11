@@ -2,8 +2,13 @@ using UnityEngine;
 
 public abstract class Enemy : Entity
 {
-    [SerializeField] protected float _damage = 5f;
+    protected float _damage;
     protected Vector3 _target;
+
+    protected virtual void Update()
+    {
+        MoveEntity(_target - transform.position);
+    }
 
     protected virtual void OnTriggerEnter(Collider other)
     {

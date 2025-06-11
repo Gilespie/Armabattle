@@ -22,22 +22,23 @@ public abstract class Destructable : MonoBehaviour
         _currentHealth = _maxHealth;
     }
 
-    public void TakeDamage(float damage)
-    {
-        if(damage <= 0) return;
+    public virtual void TakeDamage(float damage)
+     {
+        if (!_isAlive || damage <= 0f)
+            return;
 
-        _currentHealth -= damage;
+        _currentHealth = Mathf.Clamp(_currentHealth - damage, 0, _maxHealth);
 
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0f)
         {
-            _currentHealth = 0f;
+            _isAlive = false;
             DestroyEntity();
         }
     }
 
     public void RestoreHealth(float health)
     {
-        if (health <= 0) return;
+        if (!_isAlive || health <= 0) return;
 
         _currentHealth += health;
 

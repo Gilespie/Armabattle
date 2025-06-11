@@ -8,13 +8,19 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject _creditsPanel;
     [SerializeField] private GameObject _mainPanel;
     [SerializeField] private AudioClip _musicClip;
+
     private AudioSource _audiosource;
 
     private void Awake()
     {
-        _audiosource = GetComponent<AudioSource>();
-        _audiosource.clip = _musicClip;
-        _audiosource.Play();
+         _audioSource = GetComponent<AudioSource>();
+
+        if (_audioSource != null && _musicClip != null)
+        {
+            _audioSource.clip = _musicClip;
+            _audioSource.loop = true;
+            _audioSource.Play();
+        }
 
         HideCreditsPanel();
     }
@@ -31,11 +37,13 @@ public class MainMenu : MonoBehaviour
 
     public void OpenCreditsPanel()
     {
-        _creditsPanel.SetActive(true);
+        if (_creditsPanel != null)
+            _creditsPanel.SetActive(true);
     }
 
     public void HideCreditsPanel()
     {
-        _creditsPanel.SetActive(false);
+        if (_creditsPanel != null)
+            _creditsPanel.SetActive(false);
     }
 }

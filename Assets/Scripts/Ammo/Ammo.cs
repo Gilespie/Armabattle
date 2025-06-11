@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Ammo : MonoBehaviour //old class ----delete
 {
-    [SerializeField] protected int _ammoCount = 30;
+    [SerializeField] protected int _ammoCount;
 
     public int GetAmmo()
     {
