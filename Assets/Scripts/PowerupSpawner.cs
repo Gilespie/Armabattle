@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class PowerupSpawner : MonoBehaviour
+public class PowerupSpawner : GenericSpawner<Powerups>
 {
-    [SerializeField] private Powerups[] _powerups;
+    /*[SerializeField] private Powerups[] _powerups;
     [SerializeField] private float _zLimitPos = 100f;
     [SerializeField] private float _xLimitPos = 100f;
     private Vector3 _cubeSize;
@@ -13,6 +13,7 @@ public class PowerupSpawner : MonoBehaviour
     private void OnEnable()
     {
         Timer.OnSpawnPowerups += SpawnPowerup;
+
     }
 
     private void OnDisable()
@@ -33,5 +34,5 @@ public class PowerupSpawner : MonoBehaviour
         Gizmos.color = Color.yellow;
         _cubeSize = new(_xLimitPos, 0, _zLimitPos);
         Gizmos.DrawWireCube(transform.position, _cubeSize);
-    }
+    }*/
 }

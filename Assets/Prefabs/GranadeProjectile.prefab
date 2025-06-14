@@ -267,11 +267,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345bd3a25d7f8684f9d7ec754fdba939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lifeTime: 6
-  _damage: 15
+  _lifeTime: 3
+  _damage: 110
+  _speed: 30
+  _isGranade: 1
   _forceX: 30
-  _forceY: 50
-  _radiusSphere: 6.21
+  _forceY: 25
+  _radiusSphere: 10
+  _enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  _particlePrefab: {fileID: 425767559354595632, guid: f3279b4fcb6b87d4484e3f9b45f2b494, type: 3}
 --- !u!54 &1618857216823111022
 Rigidbody:
   m_ObjectHideFlags: 0

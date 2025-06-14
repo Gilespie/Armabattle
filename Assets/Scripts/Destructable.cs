@@ -3,18 +3,28 @@ using UnityEngine;
 
 public abstract class Destructable : MonoBehaviour
 {
-    public event Action<bool> OnDead;
-    [SerializeField] protected int _id = 0;
-    [SerializeField] protected float _maxHealth = 100;
-    protected bool _isAlive = true;
-    protected float _currentHealth = 0;
-    protected Collider _collider;
-    protected Rigidbody _rigidbody;
+    
+    public event Action OnHealthChanged;
 
+    [SerializeField] protected int _id = 0;
+
+    [SerializeField] protected float _maxHealth = 100;
+    public float MaxHealth => _maxHealth; 
+
+    protected bool _isAlive = true;
+
+    protected float _currentHealth = 0;
+    public float CurrentHealth
+    {
+        get { return _currentHealth; }
+        private set { _currentHealth = value; }
+    }
+
+    protected Collider _collider;
+    
     protected virtual void Awake()
     {
         _collider = GetComponent<Collider>();
-        _rigidbody = GetComponent<Rigidbody>();
     }
 
     protected virtual void Start()
@@ -27,11 +37,12 @@ public abstract class Destructable : MonoBehaviour
         if(damage <= 0) return;
 
         _currentHealth -= damage;
+        OnHealthChanged?.Invoke();
 
-        if(_currentHealth <= 0)
+        if (_currentHealth <= 0)
         {
             _currentHealth = 0f;
-            DestroyEntity();
+            DeactivateObject();
         }
     }
 
@@ -40,6 +51,7 @@ public abstract class Destructable : MonoBehaviour
         if (health <= 0) return;
 
         _currentHealth += health;
+        OnHealthChanged?.Invoke();
 
         if(_currentHealth >= _maxHealth)
         {
@@ -52,15 +64,9 @@ public abstract class Destructable : MonoBehaviour
         return _id;
     }
 
-    public float GetHealth()
-    {
-        return _currentHealth;
-    }
-
-    public void DestroyEntity()
+    protected virtual void DeactivateObject()
     {
         _isAlive = false;
-        Debug.Log("Dead!");
-        OnDead?.Invoke(_isAlive);
+        Destroy(gameObject);
     }
 }

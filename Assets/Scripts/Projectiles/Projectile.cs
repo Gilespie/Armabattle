@@ -5,12 +5,17 @@ public abstract class Projectile : MonoBehaviour
     [SerializeField] protected float _lifeTime = 5f;
     [SerializeField] protected float _damage = 15f;
     [SerializeField] protected float _speed = 30f;
+    [SerializeField] private bool _isGranade = false;
     protected Rigidbody _rigidbody;
 
     protected virtual void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();    
-        Destroy(gameObject, _lifeTime);
+        _rigidbody = GetComponent<Rigidbody>();
+
+        if (!_isGranade)
+        {
+            Destroy(gameObject, _lifeTime);
+        }
     }
 
     protected virtual void FixedUpdate()
@@ -27,10 +32,17 @@ public abstract class Projectile : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.TryGetComponent(out Destructable destructable))
+        if (!_isGranade)
         {
-            destructable.TakeDamage(_damage);
-            Destroy(gameObject);
+            if (collision.collider.TryGetComponent(out Destructable destructable))
+            {
+                destructable.TakeDamage(_damage);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            //nothing
         }
     }
 }

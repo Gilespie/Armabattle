@@ -13,9 +13,13 @@ public class MainMenu : MonoBehaviour
     private void Awake()
     {
         _audiosource = GetComponent<AudioSource>();
-        _audiosource.clip = _musicClip;
-        _audiosource.Play();
 
+        if( _audiosource != null )
+        {
+            _audiosource.clip = _musicClip;
+            _audiosource.Play();
+        }
+        
         HideCreditsPanel();
     }
 
@@ -31,11 +35,13 @@ public class MainMenu : MonoBehaviour
 
     public void OpenCreditsPanel()
     {
+        if(_creditsPanel != null)
         _creditsPanel.SetActive(true);
     }
 
     public void HideCreditsPanel()
     {
+        if(_creditsPanel != null)
         _creditsPanel.SetActive(false);
     }
 }

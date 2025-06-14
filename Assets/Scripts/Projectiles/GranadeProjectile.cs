@@ -5,10 +5,9 @@ public class GranadeProjectile : Projectile
     [SerializeField] private float _forceX = 30f;
     [SerializeField] private float _forceY = 30f;
     [SerializeField] private float _radiusSphere = 10f;
+    [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private GameObject _particlePrefab;
     private bool _shooted = false;
-    //private Destructable[] _destructables;
-    //private Ray _ray;
-    //private RaycastHit[] _hits;
 
     private void Update()
     {
@@ -16,7 +15,8 @@ public class GranadeProjectile : Projectile
 
         if(_lifeTime <= 0)
         {
-            Collider[] colls = Physics.OverlapSphere(transform.position, _radiusSphere);
+            Instantiate(_particlePrefab, transform.position, Quaternion.identity);
+            Collider[] colls = Physics.OverlapSphere(transform.position, _radiusSphere, _enemyLayer);
 
             for (int i = 0; i < colls.Length; i++)
             {

@@ -157,7 +157,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.43
+  m_Time: 0.05
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -268,8 +268,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 5
-  _damage: 15
-  _speed: 30
+  _damage: 50
+  _speed: 130
+  _isGranade: 0
 --- !u!54 &5260227525909105862
 Rigidbody:
   m_ObjectHideFlags: 0

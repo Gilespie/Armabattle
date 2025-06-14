@@ -146,7 +146,7 @@ public class Battleground : MonoBehaviour
         DeactivateKinematic();
 
         yield return new WaitForSeconds(_returnDelayTime);
-        
+
         ActivateeKinematic();
         ChangeColor(_idleColor);
         StartCoroutine(LoadPositions());

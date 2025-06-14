@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Player : Entity
 {
     public delegate void PlayerDelegate();
     public PlayerDelegate _playerDelegate;
+    public event Action<Weapon> OnWeaponChanged;
+    public static event Action OnDead;
 
     [SerializeField] private float _jumpForce = 5f;
     [SerializeField] private float _sprintSpeed = 15f;
@@ -18,6 +21,7 @@ public class Player : Entity
 
     [SerializeField] private PauseMenu _pause;
     [SerializeField] private Raycasting _raycasting;
+    [SerializeField] private CameraFollower _cameraFollower;
 
     private bool _isGround = false;
     private bool _isJumped = false;
@@ -29,36 +33,36 @@ public class Player : Entity
 
     public bool IsJumped { get { return _isJumped; } set { _isJumped = value; } }
 
-    private int _currentPistolIndex = 0;
-
-
     protected override void Awake()
     {
         base.Awake();
 
         SelectPistol();
-        _inputController = new InputController(this, _pause);
+        _inputController = new InputController(this, _pause, _cameraFollower);
         ChangeSpeed(WalkSpeed);
+
+        GameManager.Instance.Player = this;
     }
 
     protected override void Start()
     {
         base.Start();
-
-        _playerDelegate = MoveEntity;
+        
+        //_playerDelegate = MoveEntity;
     }
 
     private void Update()
     {
         _inputController.ArtificialUpdate();
         _isGround = _raycasting.IsGrounded();
-        _playerDelegate = MoveEntity;
+
+        //_playerDelegate = MoveEntity;
     }
 
-    protected void FixedUpdate()
+    protected override void FixedUpdate()
     {
         _inputController.ArtificialFixedUpdate();
-        _playerDelegate = MoveEntity;
+        //_playerDelegate = MoveEntity();
     }
 
     public void SelectPistol()
@@ -85,6 +89,7 @@ public class Player : Entity
 
         weapon.gameObject.SetActive(true);
         _currentWeapon = weapon;
+        OnWeaponChanged?.Invoke(weapon);
     }
 
     public void ChangeSpeed(float speed)
@@ -100,7 +105,13 @@ public class Player : Entity
 
     public override void MoveEntity(Vector3 dir)
     {
-        Vector3 move = (transform.right * dir.x + transform.forward * dir.z).normalized;
-        _rigidbody.MovePosition(transform.position + move * _currentSpeed * Time.fixedDeltaTime);
+        //Vector3 move = (transform.right * dir.x + transform.forward * dir.z).normalized;
+        _rigidbody.MovePosition(_rigidbody.position + dir * _currentSpeed * Time.fixedDeltaTime);
+    }
+
+    protected override void DeactivateObject()
+    {
+        base.DeactivateObject();
+        OnDead.Invoke();
     }
 }

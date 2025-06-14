@@ -130,13 +130,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxCapacityMagazine: 12
   _currentCapacity: 0
-  _shootDelay: 0.1
+  _shootDelay: 0.5
+  _delayReloadPerAmmo: 0.2
   _shootMode: 0
   _isMagazineEmpty: 0
+  _isReloading: 0
   _shootClip: {fileID: 0}
   _firePoint: {fileID: 1167507184520194965}
   _shootPrefab: {fileID: 0}
   _smokePrefab: {fileID: 0}
   _projectile: {fileID: 0}
   _ammo: {fileID: 0}
-  _objectsPool: {fileID: 0}
+  _ammoType: 0

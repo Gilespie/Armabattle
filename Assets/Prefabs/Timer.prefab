@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4d19a4ab249474bb2314de280edbc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roundDuration: 600
-  _secondsToEvent: 15
+  _roundDuration: 100
+  _secondsToEvent: 30
   _battleground: {fileID: 0}

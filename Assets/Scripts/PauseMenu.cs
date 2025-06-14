@@ -4,10 +4,11 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pausePanel;
-    //[SerializeField] private string _menuLevelName = "";
+    private SetTimescale _timescale;
 
     private void Start()
     {
+        _timescale = GameManager.Instance.Timescale;
         HidePanel();    
     }
 
@@ -18,19 +19,20 @@ public class PauseMenu : MonoBehaviour
 
     public void LoadScene(string name)
     {
-        Time.timeScale = 1.0f;
+        _timescale.ChangeTimescale(1f);
         SceneManager.LoadScene(name);
     }
 
     public void HidePanel()
     {
-        Time.timeScale = 1.0f;
+        _timescale.ChangeTimescale(1f);
         _pausePanel.SetActive(false);
     }
 
     public void ShowPanel()
     {
-        Time.timeScale = 0.0f;
+        _timescale.ChangeTimescale(0f);
         _pausePanel.SetActive(true);
+        GameManager.Instance.CursorBehaviour.ChangeState(true, CursorLockMode.Confined);
     }
 }
