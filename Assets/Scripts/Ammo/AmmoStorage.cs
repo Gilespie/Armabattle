@@ -1,70 +1,33 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AmmoStorage : MonoBehaviour
 {
-    [SerializeField] protected int _pistolAmmo = 12;
-    [SerializeField] protected int _rifleAmmo = 60;
-    [SerializeField] protected int _granadeAmmo = 6;
-    public int PistolAmmo => _pistolAmmo;
-    public int RifleAmmo => _rifleAmmo;
-    public int GranadeAmmo => _granadeAmmo;
+    private Dictionary<AmmoType, Ammo<AmmoType>> _ammoDictionary;
 
-    public void IncrementAmmo(AmmoType type, int amount)
+    private void Awake()
     {
-        switch (type)
+        _ammoDictionary = new Dictionary<AmmoType, Ammo<AmmoType>>
         {
-            case AmmoType.PistolAmmo:
-                _pistolAmmo += amount;
-                break;
-            case AmmoType.RifleAmmo:
-                _rifleAmmo += amount;
-                break;
-            case AmmoType.GranadeAmmo:
-                _granadeAmmo += amount;
-                break;
-        }
+            { AmmoType.PistolAmmo, new Ammo<AmmoType>(12) },
+            { AmmoType.RifleAmmo, new Ammo<AmmoType>(60) },
+            { AmmoType.GranadeAmmo, new Ammo<AmmoType>(6) }
+        };
+    }
+
+    public void AddAmmo(AmmoType type, int amount)
+    {
+        if (_ammoDictionary.ContainsKey(type))
+            _ammoDictionary[type].Add(amount);
     }
 
     public bool TryUseAmmo(AmmoType type)
     {
-        switch (type)
-        {
-            case AmmoType.PistolAmmo:
-                if (_pistolAmmo > 0)
-                {
-                    _pistolAmmo--;
-                    return true;
-                }
-                break;
-
-            case AmmoType.RifleAmmo:
-                if (_rifleAmmo > 0)
-                {
-                    _rifleAmmo--;
-                    return true;
-                }
-                break;
-
-            case AmmoType.GranadeAmmo:
-                if (_granadeAmmo > 0)
-                {
-                    _granadeAmmo--;
-                    return true;
-                }
-                break;
-        }
-
-        return false;
+        return _ammoDictionary.ContainsKey(type) && _ammoDictionary[type].Use();
     }
 
     public int GetAmmoCount(AmmoType type)
     {
-        return type switch
-        {
-            AmmoType.PistolAmmo => _pistolAmmo,
-            AmmoType.RifleAmmo => _rifleAmmo,
-            AmmoType.GranadeAmmo => _granadeAmmo,
-            _ => 0
-        };
+        return _ammoDictionary.ContainsKey(type) ? _ammoDictionary[type].Count : 0;
     }
 }

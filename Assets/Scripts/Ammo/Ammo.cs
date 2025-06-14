@@ -1,21 +1,24 @@
-using UnityEngine;
-
-public abstract class Ammo : MonoBehaviour //old class ----delete
+public class Ammo<T>
 {
-    [SerializeField] protected int _ammoCount = 30;
+    public int Count { get; private set; }
 
-    public int GetAmmo()
+    public Ammo(int initialCount = 0)
     {
-        return _ammoCount;
+        Count = initialCount;
     }
 
-    public void IncrementAmmo(int value)
+    public void Add(int amount)
     {
-        _ammoCount += value;
+        Count += amount;
     }
 
-    public void DicrementAmmo()
+    public bool Use()
     {
-        _ammoCount--;
+        if (Count > 0)
+        {
+            Count--;
+            return true;
+        }
+        return false;
     }
 }
