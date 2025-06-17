@@ -1,5 +1,6 @@
+using UnityEngine;
 
-public class GranadeAmmo : Ammo
+public class GranadeAmmo : Ammo<AmmoType>
 {
 
 }

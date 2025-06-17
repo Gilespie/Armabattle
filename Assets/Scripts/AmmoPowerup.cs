@@ -6,13 +6,10 @@ public class AmmoPowerup : Powerups
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out AmmoStorage ammostorage))
+        if (other.TryGetComponent(out AmmoStorage storage))
         {
-            if (ammostorage != null)
-            {
-                ammostorage.IncrementAmmo(_ammoType, (int)_value);
-                Destroy(gameObject);
-            }
+            storage.AddAmmo(_ammoType, (int)_value);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,8 +1,15 @@
 using UnityEngine;
 
-public class LightEnemy : Enemy
+public class LightEnemy : Enemy, IInitializableEnemy
 {
-    //public LightEnemy(float speed, float health, Transform player) : base(speed, health, player)
-    //{
-    //}
+    protected override void Start()
+    {
+        _walkSpeed = 4f;
+        _maxHealth = 50f;
+        _score = 10;
+        _damage = 10f;
+
+        base.Start();
+    }
+
 }
