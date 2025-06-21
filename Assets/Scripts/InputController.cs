@@ -48,17 +48,17 @@ public class InputController
 
         if (Input.GetKeyDown(_pistol))
         {
-            _player.SelectPistol();
+            _player.SetWeapon(TypeOfWeapon.Pistol);
         }
 
         if (Input.GetKeyDown(_rifle))
         {
-            _player.SelectRifle();
+            _player.SetWeapon(TypeOfWeapon.Rifle);
         }
 
         if (Input.GetKeyDown(_granade))
         {
-            _player.SelectGrenade();
+            _player.SetWeapon(TypeOfWeapon.GranadeLauncher);
         }
 
         if(Input.GetKeyDown(_pause))

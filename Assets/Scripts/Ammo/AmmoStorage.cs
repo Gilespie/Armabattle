@@ -16,7 +16,7 @@ public class AmmoStorage : MonoBehaviour
     }
 
     public void AddAmmo(AmmoType type, int amount)
-    {
+    {      
         if (_ammoDictionary.ContainsKey(type))
             _ammoDictionary[type].Add(amount);
     }

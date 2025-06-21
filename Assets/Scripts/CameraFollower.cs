@@ -10,7 +10,6 @@ public class CameraFollower : MonoBehaviour
     [SerializeField, Range(-90f, 0f)] private float _minRotation = -80f;
     [SerializeField, Range(0f, 90f)] private float _maxRotation = 80f;
     [SerializeField] private float _lerpRate = 3f;
-    //[SerializeField] private Vector3 _offset;
 
     private float _mouseX, _mouseY;
     private Vector2 _mouseInput;

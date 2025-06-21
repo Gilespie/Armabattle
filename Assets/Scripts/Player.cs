@@ -1,10 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Entity
 {
-    public delegate void PlayerDelegate();
-    public PlayerDelegate _playerDelegate;
     public event Action<Weapon> OnWeaponChanged;
     public static event Action OnDead;
 
@@ -12,9 +11,9 @@ public class Player : Entity
     [SerializeField] private float _sprintSpeed = 15f;
 
     [Header("Weapons")]
-    [SerializeField] private Weapon _pistol;
-    [SerializeField] private Weapon _rifle;
-    [SerializeField] private Weapon _granadeLauncher;
+    [SerializeField] private WeaponData[] _weaponData;
+    [SerializeField] private TypeOfWeapon _initialWeapon;
+    private Dictionary<TypeOfWeapon, Weapon> _totalWeapon = new Dictionary<TypeOfWeapon,Weapon>();
 
     private Weapon _currentWeapon;
     public Weapon CurrentWeapon => _currentWeapon;
@@ -37,7 +36,12 @@ public class Player : Entity
     {
         base.Awake();
 
-        SelectPistol();
+        foreach(var item in _weaponData)
+        {
+            if(!_totalWeapon.ContainsKey(item.type))
+                _totalWeapon.Add(item.type, item.weapon);
+        }
+
         _inputController = new InputController(this, _pause, _cameraFollower);
         ChangeSpeed(WalkSpeed);
 
@@ -47,49 +51,33 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
-        
-        //_playerDelegate = MoveEntity;
+        SetWeapon(_initialWeapon);
     }
 
     private void Update()
     {
         _inputController.ArtificialUpdate();
         _isGround = _raycasting.IsGrounded();
-
-        //_playerDelegate = MoveEntity;
     }
 
     protected override void FixedUpdate()
     {
         _inputController.ArtificialFixedUpdate();
-        //_playerDelegate = MoveEntity();
     }
 
-    public void SelectPistol()
+    public void SetWeapon(TypeOfWeapon type)
     {
-        SetWeapon(_pistol);
-    }
+        if (!_totalWeapon.ContainsKey(type)) return;
 
-    public void SelectRifle()
-    {
-        SetWeapon(_rifle);
-    }
+        foreach(var item in _totalWeapon)
+        {
+            item.Value.gameObject.SetActive(false);
+        }
 
-    public void SelectGrenade()
-    {
-        SetWeapon(_granadeLauncher);
-    }
+        _currentWeapon = _totalWeapon[type];
+        _currentWeapon.gameObject.SetActive(true);
 
-    private void SetWeapon(Weapon weapon)
-    {
-
-        _pistol.gameObject.SetActive(false);
-        _rifle.gameObject.SetActive(false);
-        _granadeLauncher.gameObject.SetActive(false);
-
-        weapon.gameObject.SetActive(true);
-        _currentWeapon = weapon;
-        OnWeaponChanged?.Invoke(weapon);
+        OnWeaponChanged?.Invoke(_currentWeapon);
     }
 
     public void ChangeSpeed(float speed)
@@ -105,7 +93,6 @@ public class Player : Entity
 
     public override void MoveEntity(Vector3 dir)
     {
-        //Vector3 move = (transform.right * dir.x + transform.forward * dir.z).normalized;
         _rigidbody.MovePosition(_rigidbody.position + dir * _currentSpeed * Time.fixedDeltaTime);
     }
 

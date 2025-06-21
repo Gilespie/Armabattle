@@ -1,23 +1,10 @@
 using UnityEngine;
 
-public abstract class Enemy : Entity, IInitializableEnemy
+public abstract class Enemy : Entity
 {
     [Header("Enemy Settings")]
     [SerializeField] protected float _damage = 10f;
-    [SerializeField] protected int _score = 10;
-
     protected Transform _target;
-
-    public float Damage => _damage;
-    public int Score => _score;
-
-
-    public void Initialize(Transform target, float damage, int score)
-    {
-        _target = target;
-        _damage = damage;
-        _score = score;
-    }
 
     protected override void Start()
     {

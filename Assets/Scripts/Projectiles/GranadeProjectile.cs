@@ -15,20 +15,7 @@ public class GranadeProjectile : Projectile
 
         if(_lifeTime <= 0)
         {
-            Instantiate(_particlePrefab, transform.position, Quaternion.identity);
-            Collider[] colls = Physics.OverlapSphere(transform.position, _radiusSphere, _enemyLayer);
-
-            for (int i = 0; i < colls.Length; i++)
-            {
-                Destructable destruct = colls[i].GetComponent<Destructable>();
-
-                if (destruct != null)
-                {
-                    destruct.TakeDamage(_damage);
-                }
-            }
-
-            Destroy(gameObject);
+            ActivateGranade();
         }
     }
 
@@ -39,6 +26,25 @@ public class GranadeProjectile : Projectile
             MoveProject();
             _shooted = true;
         }
+    }
+
+    protected override void ActivateGranade()
+    {
+        Collider[] colls = Physics.OverlapSphere(transform.position, _radiusSphere, _enemyLayer);
+
+        for (int i = 0; i < colls.Length; i++)
+        {
+            Destructable destruct = colls[i].GetComponent<Destructable>();
+
+            if (destruct != null && !destruct.GetComponent<Player>())
+            {
+                destruct.TakeDamage(_damage);
+            }
+        }
+
+        Instantiate(_particlePrefab, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
     }
 
     protected override void MoveProject()

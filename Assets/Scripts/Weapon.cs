@@ -29,6 +29,7 @@ public abstract class Weapon : MonoBehaviour
     {
         _audiosource = GetComponent<AudioSource>();
         _currentCapacity = _maxCapacityMagazine;
+        OnAmmoChanged?.Invoke();
     }
 
     private void Update()

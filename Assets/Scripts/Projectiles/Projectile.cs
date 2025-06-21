@@ -30,11 +30,11 @@ public abstract class Projectile : MonoBehaviour
         _rigidbody.MovePosition(transform.position + dir * _speed * Time.fixedDeltaTime);
     }
 
-    protected virtual void OnCollisionEnter(Collision collision)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (!_isGranade)
         {
-            if (collision.collider.TryGetComponent(out Destructable destructable))
+            if (other.TryGetComponent(out Destructable destructable))
             {
                 destructable.TakeDamage(_damage);
                 Destroy(gameObject);
@@ -42,7 +42,15 @@ public abstract class Projectile : MonoBehaviour
         }
         else
         {
-            //nothing
+            if (other.TryGetComponent<Player>(out Player player)) return;
+
+            if (other.TryGetComponent(out Destructable destructable))
+                ActivateGranade();
         }
+    }
+
+    protected virtual void ActivateGranade()
+    {
+
     }
 }
