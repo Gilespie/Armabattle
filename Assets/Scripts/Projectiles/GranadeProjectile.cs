@@ -28,17 +28,17 @@ public class GranadeProjectile : Projectile
         }
     }
 
-    protected override void ActivateGranade()
+    private void ActivateGranade()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, _radiusSphere, _enemyLayer);
 
         for (int i = 0; i < colls.Length; i++)
         {
-            Destructable destruct = colls[i].GetComponent<Destructable>();
+            IDamageable damageable = colls[i].GetComponent<IDamageable>();
 
-            if (destruct != null && !destruct.GetComponent<Player>())
+            if (damageable != null && !colls[i].GetComponent<Player>())
             {
-                destruct.TakeDamage(_damage);
+                damageable.TakeDamage(_damage);
             }
         }
 

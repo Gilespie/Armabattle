@@ -4,9 +4,9 @@ public class HealthPowerup : Powerups
 {
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player) != false)
+        if (other.TryGetComponent(out IRestoreLife restorable))
         {
-            player.RestoreHealth(_value);
+            restorable.RestoreHealth(_value);
             Destroy(gameObject);
         }
     }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class Destructable : MonoBehaviour
+public abstract class Destructable : MonoBehaviour, IDamageable, IRestoreLife
 {
     
     public event Action OnHealthChanged;
@@ -46,11 +46,11 @@ public abstract class Destructable : MonoBehaviour
         }
     }
 
-    public void RestoreHealth(float health)
+    public void RestoreHealth(float amount)
     {
-        if (health <= 0) return;
+        if (amount <= 0) return;
 
-        _currentHealth += health;
+        _currentHealth += amount;
         OnHealthChanged?.Invoke();
 
         if(_currentHealth >= _maxHealth)
@@ -68,5 +68,11 @@ public abstract class Destructable : MonoBehaviour
     {
         _isAlive = false;
         Destroy(gameObject);
+    }
+
+    public void InstallKill()
+    {
+        _currentHealth = 0;
+        DeactivateObject();
     }
 }

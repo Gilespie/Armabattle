@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028301, g: 0.22571309, b: 0.30692127, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1836,7 +1836,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -3985,30 +3985,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.data[1].Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.data[2].Type
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.data[0].count
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.data[1].count
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 3382746761618714227, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-      propertyPath: _ammo.Array.data[2].count
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4051574052657680704, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4044,23 +4020,12 @@ PrefabInstance:
     - target: {fileID: 8945143038690770243, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
       propertyPath: _weaponData.Array.data[2].weapon
       value: 
-      objectReference: {fileID: 6248022747022174563}
+      objectReference: {fileID: 6248022747022174573}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
---- !u!114 &6248022747022174563 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6191834952270649281, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
-  m_PrefabInstance: {fileID: 6248022747022174562}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5c023bb2ef569498e4066bdef0bbeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6248022747022174564 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5431546610960613040, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
@@ -4081,6 +4046,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6d6510027a9c3499a26dd81c0c5a39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6248022747022174573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6191834952270649281, guid: b1d7ad8c893755b47bd628372bdc2e88, type: 3}
+  m_PrefabInstance: {fileID: 6248022747022174562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5c023bb2ef569498e4066bdef0bbeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &7199482453894252614

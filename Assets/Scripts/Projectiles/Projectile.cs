@@ -3,19 +3,13 @@ using UnityEngine;
 public abstract class Projectile : MonoBehaviour
 {
     [SerializeField] protected float _lifeTime = 5f;
-    [SerializeField] protected float _damage = 15f;
+    [SerializeField] protected float _damage;
     [SerializeField] protected float _speed = 30f;
-    [SerializeField] private bool _isGranade = false;
     protected Rigidbody _rigidbody;
 
     protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-
-        if (!_isGranade)
-        {
-            Destroy(gameObject, _lifeTime);
-        }
     }
 
     protected virtual void FixedUpdate()
@@ -32,25 +26,13 @@ public abstract class Projectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (!_isGranade)
-        {
-            if (other.TryGetComponent(out Destructable destructable))
+        if (other.TryGetComponent(out IDamageable damageable))
             {
-                destructable.TakeDamage(_damage);
+                damageable.TakeDamage(_damage);
                 Destroy(gameObject);
             }
-        }
-        else
-        {
-            if (other.TryGetComponent<Player>(out Player player)) return;
-
-            if (other.TryGetComponent(out Destructable destructable))
-                ActivateGranade();
-        }
+        
     }
 
-    protected virtual void ActivateGranade()
-    {
-
-    }
+    
 }

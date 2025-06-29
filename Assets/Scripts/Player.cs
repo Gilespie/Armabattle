@@ -71,7 +71,10 @@ public class Player : Entity
 
         foreach(var item in _totalWeapon)
         {
-            item.Value.gameObject.SetActive(false);
+            if (item.Value != null)
+            {
+                item.Value.gameObject.SetActive(false);
+            }
         }
 
         _currentWeapon = _totalWeapon[type];

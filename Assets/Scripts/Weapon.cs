@@ -21,7 +21,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected AmmoStorage _ammo;
     [SerializeField] protected AmmoType _ammoType;
     private AudioSource _audiosource;
-    private float _timer = 0;
+    protected float _timer = 0;
     public AmmoType GetAmmoType() => _ammoType;
     public int CurrentCapacity => _currentCapacity;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Enemy : Entity
 {
     [Header("Enemy Settings")]
-    [SerializeField] protected float _damage = 10f;
+    [SerializeField] protected float _damage;
     protected Transform _target;
 
     protected override void Start()
@@ -27,9 +27,9 @@ public abstract class Enemy : Entity
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Destructable destructable) && destructable.GetID() != 0)
+        if (other.TryGetComponent(out IDamageable damageable) && other.TryGetComponent(out Destructable destructable) && destructable.GetID() != 0)
         {
-            destructable.TakeDamage(_damage);
+            damageable.TakeDamage(_damage);
             Destroy(gameObject);
         }
     }

@@ -4,4 +4,4 @@ public class GranadeLauncher : Weapon
     {
         base.Shoot();
     }
-}
+} 
